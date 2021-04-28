@@ -40,14 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface FIRInAppMessagingActionButton (Private)
-
-- (instancetype)initWithButtonText:(NSString *)btnText
-                   buttonTextColor:(UIColor *)textColor
-                   backgroundColor:(UIColor *)bkgColor;
-
-@end
-
 @interface FIRInAppMessagingImageData (Private)
 
 - (instancetype)initWithImageURL:(NSString *)imageURL imageData:(NSData *)imageData;

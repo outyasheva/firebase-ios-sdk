@@ -64,6 +64,11 @@ NS_SWIFT_NAME(InAppMessagingActionButton)
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
 
+/// This class should only be initialized from a custom in-app message UI component implementation.
+- (instancetype)initWithButtonText:(NSString *)btnText
+                   buttonTextColor:(UIColor *)textColor
+                   backgroundColor:(UIColor *)bkgColor;
+
 @end
 
 /** Contain display data for an image for a fiam message.
@@ -229,17 +234,19 @@ NS_SWIFT_NAME(InAppMessagingCardDisplay)
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
 
+/// Convenience initializer for custom message view debugging in SwiftUI previews. Should only be
+/// used in SwiftUI projects.
 + (FIRInAppMessagingCardDisplay *)
     cardMessageForSwiftUIPreviewsWithTitle:(NSString *)title
                                       body:(nullable NSString *)body
                                  textColor:(UIColor *)textColor
-                         portraitImageData:(FIRInAppMessagingImageData *)portraitImageData
-                        landscapeImageData:(nullable FIRInAppMessagingImageData *)landscapeImageData
+                             portraitImage:(UIImage *)portraitImage
+                            landscapeImage:(nullable UIImage *)landscapeImage
                            backgroundColor:(UIColor *)backgroundColor
                        primaryActionButton:(FIRInAppMessagingActionButton *)primaryActionButton
                      secondaryActionButton:
                          (nullable FIRInAppMessagingActionButton *)secondaryActionButton
-                                   appData:(NSDictionary *)appData;
+                                   appData:(nullable NSDictionary *)appData;
 
 @end
 
@@ -286,14 +293,16 @@ NS_SWIFT_NAME(InAppMessagingModalDisplay)
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
 
+/// Convenience initializer for custom message view debugging in SwiftUI previews. Should only be
+/// used in SwiftUI projects.
 + (FIRInAppMessagingModalDisplay *)
     modalMessageForSwiftUIPreviewsWithTitle:(NSString *)title
                                        body:(nullable NSString *)body
                                   textColor:(UIColor *)textColor
-                                  imageData:(nullable FIRInAppMessagingImageData *)imageData
+                                      image:(nullable UIImage *)image
                             backgroundColor:(UIColor *)backgroundColor
                                actionButton:(nullable FIRInAppMessagingActionButton *)actionButton
-                                    appData:(NSDictionary *)appData;
+                                    appData:(nullable NSDictionary *)appData;
 
 @end
 
@@ -335,14 +344,16 @@ NS_SWIFT_NAME(InAppMessagingBannerDisplay)
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
 
+/// Convenience initializer for custom message view debugging in SwiftUI previews. Should only be
+/// used in SwiftUI projects.
 + (FIRInAppMessagingBannerDisplay *)
     bannerMessageForSwiftUIPreviewsWithTitle:(NSString *)title
                                         body:(nullable NSString *)body
                                    textColor:(UIColor *)textColor
-                                   imageData:(nullable FIRInAppMessagingImageData *)imageData
+                                       image:(nullable UIImage *)image
                              backgroundColor:(UIColor *)backgroundColor
                                 actionButton:(nullable FIRInAppMessagingActionButton *)actionButton
-                                     appData:(NSDictionary *)appData;
+                                     appData:(nullable NSDictionary *)appData;
 
 @end
 
@@ -364,9 +375,11 @@ NS_SWIFT_NAME(InAppMessagingImageOnlyDisplay)
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
 
-+ (FIRInAppMessagingImageOnlyDisplay *)
-    imageOnlyMessageForSwiftUIPreviewsWithImageData:(FIRInAppMessagingImageData *)imageData
-                                            appData:(NSDictionary *)appData;
+/// Convenience initializer for custom message view debugging in SwiftUI previews. Should only be
+/// used in SwiftUI projects.
++ (FIRInAppMessagingImageOnlyDisplay *)imageOnlyMessageForSwiftUIPreviewsWithImage:(UIImage *)image
+                                                                           appData:(NSDictionary *)
+                                                                                       appData;
 
 @end
 
