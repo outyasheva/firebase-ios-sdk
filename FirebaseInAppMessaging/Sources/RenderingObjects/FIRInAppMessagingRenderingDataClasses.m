@@ -136,6 +136,31 @@
                          appData:nil];
 }
 
++ (FIRInAppMessagingCardDisplay *)
+    cardMessageForSwiftUIPreviewsWithTitle:(NSString *)title
+                                      body:(NSString *)body
+                                 textColor:(UIColor *)textColor
+                         portraitImageData:(FIRInAppMessagingImageData *)portraitImageData
+                        landscapeImageData:(FIRInAppMessagingImageData *)landscapeImageData
+                           backgroundColor:(UIColor *)backgroundColor
+                       primaryActionButton:(FIRInAppMessagingActionButton *)primaryActionButton
+                     secondaryActionButton:(FIRInAppMessagingActionButton *)secondaryActionButton
+                                   appData:(NSDictionary *)appData {
+  return [[FIRInAppMessagingCardDisplay alloc]
+        initWithMessageID:@"testMessage"
+             campaignName:@"testCampaign"
+        experimentPayload:nil
+      renderAsTestMessage:YES
+              triggerType:FIRInAppMessagingDisplayTriggerTypeOnAnalyticsEvent
+                titleText:title
+                textColor:textColor
+        portraitImageData:portraitImageData
+          backgroundColor:backgroundColor
+      primaryActionButton:primaryActionButton
+         primaryActionURL:nil
+                  appData:appData];
+}
+
 @end
 
 @implementation FIRInAppMessagingBannerDisplay
@@ -190,6 +215,29 @@
                        imageData:imageData
                        actionURL:actionURL
                          appData:nil];
+}
+
++ (FIRInAppMessagingBannerDisplay *)
+    bannerMessageForSwiftUIPreviewsWithTitle:(NSString *)title
+                                        body:(NSString *)body
+                                   textColor:(UIColor *)textColor
+                                   imageData:(FIRInAppMessagingImageData *)imageData
+                             backgroundColor:(UIColor *)backgroundColor
+                                actionButton:(FIRInAppMessagingActionButton *)actionButton
+                                     appData:(NSDictionary *)appData {
+  return [[FIRInAppMessagingBannerDisplay alloc]
+        initWithMessageID:@"testMessage"
+             campaignName:@"testCampaign"
+        experimentPayload:nil
+      renderAsTestMessage:YES
+              triggerType:FIRInAppMessagingDisplayTriggerTypeOnAnalyticsEvent
+                titleText:title
+                 bodyText:body
+                textColor:textColor
+          backgroundColor:backgroundColor
+                imageData:imageData
+                actionURL:nil
+                  appData:appData];
 }
 
 @end
@@ -253,6 +301,30 @@
                          appData:nil];
 }
 
++ (FIRInAppMessagingModalDisplay *)
+    modalMessageForSwiftUIPreviewsWithTitle:(NSString *)title
+                                       body:(NSString *)body
+                                  textColor:(UIColor *)textColor
+                                  imageData:(FIRInAppMessagingImageData *)imageData
+                            backgroundColor:(UIColor *)backgroundColor
+                               actionButton:(FIRInAppMessagingActionButton *)actionButton
+                                    appData:(NSDictionary *)appData {
+  return [[FIRInAppMessagingModalDisplay alloc]
+        initWithMessageID:@"testMessage"
+             campaignName:@"testCampaign"
+        experimentPayload:nil
+      renderAsTestMessage:YES
+              triggerType:FIRInAppMessagingDisplayTriggerTypeOnAnalyticsEvent
+                titleText:title
+                 bodyText:body
+                textColor:textColor
+          backgroundColor:backgroundColor
+                imageData:imageData
+             actionButton:actionButton
+                actionURL:nil
+                  appData:appData];
+}
+
 @end
 
 @implementation FIRInAppMessagingImageOnlyDisplay
@@ -292,6 +364,20 @@
                        imageData:imageData
                        actionURL:actionURL
                          appData:nil];
+}
+
++ (FIRInAppMessagingImageOnlyDisplay *)
+    imageOnlyMessageForSwiftUIPreviewsWithImageData:(FIRInAppMessagingImageData *)imageData
+                                            appData:(NSDictionary *)appData {
+  return [[FIRInAppMessagingImageOnlyDisplay alloc]
+        initWithMessageID:@"testMessage"
+             campaignName:@"testCampaign"
+        experimentPayload:nil
+      renderAsTestMessage:YES
+              triggerType:FIRInAppMessagingDisplayTriggerTypeOnAnalyticsEvent
+                imageData:imageData
+                actionURL:nil
+                  appData:appData];
 }
 
 @end

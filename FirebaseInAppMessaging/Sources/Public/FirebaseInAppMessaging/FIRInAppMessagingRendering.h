@@ -229,6 +229,18 @@ NS_SWIFT_NAME(InAppMessagingCardDisplay)
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
 
++ (FIRInAppMessagingCardDisplay *)
+    cardMessageForSwiftUIPreviewsWithTitle:(NSString *)title
+                                      body:(nullable NSString *)body
+                                 textColor:(UIColor *)textColor
+                         portraitImageData:(FIRInAppMessagingImageData *)portraitImageData
+                        landscapeImageData:(nullable FIRInAppMessagingImageData *)landscapeImageData
+                           backgroundColor:(UIColor *)backgroundColor
+                       primaryActionButton:(FIRInAppMessagingActionButton *)primaryActionButton
+                     secondaryActionButton:
+                         (nullable FIRInAppMessagingActionButton *)secondaryActionButton
+                                   appData:(NSDictionary *)appData;
+
 @end
 
 /** Class for defining a modal message for display.
@@ -274,6 +286,15 @@ NS_SWIFT_NAME(InAppMessagingModalDisplay)
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
 
++ (FIRInAppMessagingModalDisplay *)
+    modalMessageForSwiftUIPreviewsWithTitle:(NSString *)title
+                                       body:(nullable NSString *)body
+                                  textColor:(UIColor *)textColor
+                                  imageData:(nullable FIRInAppMessagingImageData *)imageData
+                            backgroundColor:(UIColor *)backgroundColor
+                               actionButton:(nullable FIRInAppMessagingActionButton *)actionButton
+                                    appData:(NSDictionary *)appData;
+
 @end
 
 /** Class for defining a banner message for display.
@@ -314,6 +335,15 @@ NS_SWIFT_NAME(InAppMessagingBannerDisplay)
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
 
++ (FIRInAppMessagingBannerDisplay *)
+    bannerMessageForSwiftUIPreviewsWithTitle:(NSString *)title
+                                        body:(nullable NSString *)body
+                                   textColor:(UIColor *)textColor
+                                   imageData:(nullable FIRInAppMessagingImageData *)imageData
+                             backgroundColor:(UIColor *)backgroundColor
+                                actionButton:(nullable FIRInAppMessagingActionButton *)actionButton
+                                     appData:(NSDictionary *)appData;
+
 @end
 
 /** Class for defining a image-only message for display.
@@ -333,6 +363,10 @@ NS_SWIFT_NAME(InAppMessagingImageOnlyDisplay)
 
 /// Unavailable.
 - (instancetype)init NS_UNAVAILABLE;
+
++ (FIRInAppMessagingImageOnlyDisplay *)
+    imageOnlyMessageForSwiftUIPreviewsWithImageData:(FIRInAppMessagingImageData *)imageData
+                                            appData:(NSDictionary *)appData;
 
 @end
 
