@@ -140,13 +140,19 @@
     cardMessageForSwiftUIPreviewsWithTitle:(NSString *)title
                                       body:(NSString *)body
                                  textColor:(UIColor *)textColor
-                         portraitImageData:(FIRInAppMessagingImageData *)portraitImageData
-                        landscapeImageData:(FIRInAppMessagingImageData *)landscapeImageData
+                             portraitImage:(UIImage *)portraitImage
+                            landscapeImage:(UIImage *)landscapeImage
                            backgroundColor:(UIColor *)backgroundColor
                        primaryActionButton:(FIRInAppMessagingActionButton *)primaryActionButton
                      secondaryActionButton:(FIRInAppMessagingActionButton *)secondaryActionButton
                                    appData:(NSDictionary *)appData {
-  return [[FIRInAppMessagingCardDisplay alloc]
+  FIRInAppMessagingImageData *portraitImageData =
+      [[FIRInAppMessagingImageData alloc] initWithImageURL:@"http://fakeurl.com"
+                                                 imageData:UIImagePNGRepresentation(portraitImage)];
+  FIRInAppMessagingImageData *landscapeImageData = [[FIRInAppMessagingImageData alloc]
+      initWithImageURL:@"http://fakeurl.com"
+             imageData:UIImagePNGRepresentation(landscapeImage)];
+  FIRInAppMessagingCardDisplay *cardMessage = [[FIRInAppMessagingCardDisplay alloc]
         initWithMessageID:@"testMessage"
              campaignName:@"testCampaign"
         experimentPayload:nil
@@ -159,6 +165,10 @@
       primaryActionButton:primaryActionButton
          primaryActionURL:nil
                   appData:appData];
+  [cardMessage setBody:body];
+  [cardMessage setLandscapeImageData:landscapeImageData];
+  [cardMessage setSecondaryActionButton:secondaryActionButton];
+  return cardMessage;
 }
 
 @end
@@ -221,7 +231,7 @@
     bannerMessageForSwiftUIPreviewsWithTitle:(NSString *)title
                                         body:(NSString *)body
                                    textColor:(UIColor *)textColor
-                                   imageData:(FIRInAppMessagingImageData *)imageData
+                                       image:(UIImage *)image
                              backgroundColor:(UIColor *)backgroundColor
                                 actionButton:(FIRInAppMessagingActionButton *)actionButton
                                      appData:(NSDictionary *)appData {
@@ -235,7 +245,9 @@
                  bodyText:body
                 textColor:textColor
           backgroundColor:backgroundColor
-                imageData:imageData
+                imageData:[[FIRInAppMessagingImageData alloc]
+                              initWithImageURL:@"http://fakeurl.com"
+                                     imageData:UIImagePNGRepresentation(image)]
                 actionURL:nil
                   appData:appData];
 }
@@ -305,7 +317,7 @@
     modalMessageForSwiftUIPreviewsWithTitle:(NSString *)title
                                        body:(NSString *)body
                                   textColor:(UIColor *)textColor
-                                  imageData:(FIRInAppMessagingImageData *)imageData
+                                      image:(UIImage *)image
                             backgroundColor:(UIColor *)backgroundColor
                                actionButton:(FIRInAppMessagingActionButton *)actionButton
                                     appData:(NSDictionary *)appData {
@@ -319,7 +331,9 @@
                  bodyText:body
                 textColor:textColor
           backgroundColor:backgroundColor
-                imageData:imageData
+                imageData:[[FIRInAppMessagingImageData alloc]
+                              initWithImageURL:@"http://fakeurl.com"
+                                     imageData:UIImagePNGRepresentation(image)]
              actionButton:actionButton
                 actionURL:nil
                   appData:appData];
@@ -366,16 +380,18 @@
                          appData:nil];
 }
 
-+ (FIRInAppMessagingImageOnlyDisplay *)
-    imageOnlyMessageForSwiftUIPreviewsWithImageData:(FIRInAppMessagingImageData *)imageData
-                                            appData:(NSDictionary *)appData {
++ (FIRInAppMessagingImageOnlyDisplay *)imageOnlyMessageForSwiftUIPreviewsWithImage:(UIImage *)image
+                                                                           appData:(NSDictionary *)
+                                                                                       appData {
   return [[FIRInAppMessagingImageOnlyDisplay alloc]
         initWithMessageID:@"testMessage"
              campaignName:@"testCampaign"
         experimentPayload:nil
       renderAsTestMessage:YES
               triggerType:FIRInAppMessagingDisplayTriggerTypeOnAnalyticsEvent
-                imageData:imageData
+                imageData:[[FIRInAppMessagingImageData alloc]
+                              initWithImageURL:@"http://fakeurl.com"
+                                     imageData:UIImagePNGRepresentation(image)]
                 actionURL:nil
                   appData:appData];
 }
