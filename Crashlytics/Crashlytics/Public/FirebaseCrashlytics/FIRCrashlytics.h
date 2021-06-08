@@ -54,6 +54,7 @@ NS_SWIFT_NAME(Crashlytics)
  * @param msg Message to log
  */
 - (void)log:(NSString *)msg;
+- (void)logWithTime:(uint64_t)time andMessage:(NSString *)msg;
 
 /**
  * Adds logging that is sent with your crash data. The logging does not appear  in the
