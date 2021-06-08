@@ -49,6 +49,10 @@ void FIRCLSLogInternal(FIRCLSUserLoggingABStorage *storage,
                        const char **activePath,
                        NSString *message);
 
+void FIRCLSLogInternalWithTime(uint64_t userTime, FIRCLSUserLoggingABStorage *storage,
+                       const char **activePath,
+                               NSString *message);
+
 #pragma mark - Setup
 void FIRCLSUserLoggingInit(FIRCLSUserLoggingReadOnlyContext *roContext,
                            FIRCLSUserLoggingWritableContext *rwContext) {
@@ -407,6 +411,22 @@ void FIRCLSLog(NSString *format, ...) {
   FIRCLSLogInternal(currentStorage, activePath, msg);
 }
 
+void FIRCLSLogWithTime(uint64_t time, NSString *format, ...) {
+  // If the format is nil do nothing just like NSLog.
+  if (!format) {
+    return;
+  }
+
+  va_list args;
+  va_start(args, format);
+  NSString *msg = [[NSString alloc] initWithFormat:format arguments:args];
+  va_end(args);
+
+  FIRCLSUserLoggingABStorage *currentStorage = &_firclsContext.readonly->logging.logStorage;
+  const char **activePath = &_firclsContext.writable->logging.activeUserLogPath;
+  FIRCLSLogInternalWithTime(time, currentStorage, activePath, msg);
+}
+
 void FIRCLSLogToStorage(FIRCLSUserLoggingABStorage *storage,
                         const char **activePath,
                         NSString *format,
@@ -551,6 +571,44 @@ void FIRCLSLogInternalWrite(FIRCLSFile *file, NSString *message, uint64_t time) 
   FIRCLSFileWriteHashEntryUint64(file, "time", time);
   FIRCLSFileWriteHashEnd(file);
   FIRCLSFileWriteSectionEnd(file);
+}
+
+void FIRCLSLogInternalWithTime(uint64_t userTime, FIRCLSUserLoggingABStorage *storage,
+                       const char **activePath,
+                               NSString *message) {
+    if (!message) {
+      return;
+    }
+
+    if (!FIRCLSContextIsInitialized()) {
+      FIRCLSWarningLog(@"WARNING: FIRCLSLog has been used before (or concurrently with) "
+                       @"Crashlytics initialization and cannot be recorded. The message was: \n%@",
+                       message);
+      return;
+    }
+    struct timeval te;
+
+    NSUInteger messageLength = [message length];
+    int maxLogSize = storage->maxSize;
+
+    if (messageLength > maxLogSize) {
+      FIRCLSWarningLog(
+          @"WARNING: Attempted to write %zd bytes, but %d is the maximum size of the log. "
+          @"Truncating to %d bytes.\n",
+          messageLength, maxLogSize, maxLogSize);
+      message = [message substringToIndex:maxLogSize];
+    }
+
+    // unable to get time - abort
+    if (gettimeofday(&te, NULL) != 0) {
+      return;
+    }
+
+    const uint64_t time = userTime;
+
+    FIRCLSUserLoggingWriteAndCheckABFiles(storage, activePath, ^(FIRCLSFile *file) {
+      FIRCLSLogInternalWrite(file, message, time);
+    });
 }
 
 void FIRCLSLogInternal(FIRCLSUserLoggingABStorage *storage,

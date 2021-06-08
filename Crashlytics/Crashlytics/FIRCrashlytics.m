@@ -256,6 +256,11 @@ NSString *const FIRCLSGoogleTransportMappingID = @"1206";
   FIRCLSLog(@"%@", msg);
 }
 
+- (void)logWithTime:(uint64_t)time andMessage:(NSString *)msg
+{
+    FIRCLSLogWithTime(time, @"%@", msg);
+}
+
 - (void)logWithFormat:(NSString *)format, ... {
   va_list args;
   va_start(args, format);
